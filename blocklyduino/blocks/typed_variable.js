@@ -1,6 +1,7 @@
 /**
  * @license
  * Copyright 2020 Sébastien CANET
+ * Copyright 2025 fast-friction
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -9,9 +10,29 @@
  * @author scanet@libreduc.cc (Sébastien CANET)
  */
 
+/**
+ * @author 54060627+fast-friction@users.noreply.github.com (fast-friction)
+ * Description: Added vars_setup for int and float variable blocks 
+ */
+
 'use strict';
 
 goog.provide('Blockly.Constants.VariablesTyped');
+
+Blockly.Blocks['vars_setup_int'] = {
+    init: function () {
+        this.appendValueInput("VALUE")
+                .appendField("🔢 setup")
+                .appendField(new Blockly.FieldVariable("", null, ['int'], 'int'), "VAR_SETUP_INT")
+                .appendField("to")
+                .setCheck(intCompatibility);
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setStyle('variable_blocks');
+        this.setTooltip("");
+        this.setHelpUrl("");
+    }
+};
 
 Blockly.Blocks['vars_set_int'] = {
     init: function () {
@@ -33,6 +54,21 @@ Blockly.Blocks['vars_get_int'] = {
         this.appendDummyInput()
                 .appendField(new Blockly.FieldVariable("", null, ['int'], 'int'), "VAR_GET_INT");
         this.setOutput(true, "int");
+        this.setStyle('variable_blocks');
+        this.setTooltip("");
+        this.setHelpUrl("");
+    }
+};
+
+Blockly.Blocks['vars_setup_float'] = {
+    init: function () {
+        this.appendValueInput("VALUE")
+                .appendField("❟ setup")
+                .appendField(new Blockly.FieldVariable("", null, ['float'], 'float'), "VAR_SETUP_FLOAT")
+                .appendField("to")
+                .setCheck(floatCompatibility);
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
         this.setStyle('variable_blocks');
         this.setTooltip("");
         this.setHelpUrl("");

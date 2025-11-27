@@ -1,12 +1,15 @@
 /**
  * @license
  * Copyright 2020 Sébastien CANET
+ * Copyright 2025 fast-friction
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /**
  * @fileoverview Helper functions for buttons visible in UI.
  * @author scanet@libreduc.cc (SebCanet)
+ * @author 54060627+fast-friction@users.noreply.github.com (fast-friction)
+ * Description: Added citera_board. citera_board is a custom board based on CH32V203.
  */
 
 /*
@@ -179,7 +182,7 @@ Code.Redo = function () {
 Code.BlockFactory = function () {
     var lang = Code.getStringParamFromUrl('lang', '');
     if (!lang) {
-        lang = "en";
+        lang = "ja";
     }
     parent.open('tools/blockFactory/blockFactory.html?lang=' + lang);
 };
@@ -287,7 +290,8 @@ Code.uploadCode = function (code, boardId, mode, callback) {
         "arduino_pro16": "arduino:avr:pro",
         "arduino_uno": "arduino:avr:uno",
         "arduino_yun": "arduino:avr:yun",
-        "lilypad": "arduino:avr:lilypad"
+        "lilypad": "arduino:avr:lilypad",
+        "citera_board": "arduino:avr:citera_board"
     };
     var url = "http://127.0.0.1:8080/" + mode + "/";
     var method = "POST";

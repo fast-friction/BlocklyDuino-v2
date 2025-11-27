@@ -1,9 +1,13 @@
 /**
  * @license
  * Copyright 2020 Toshiyuki Nakamura (Toshiyuki Nakamura)
+ * Copyright 2025 fast-friction
  * SPDX-License-Identifier: BSD-3-Clause
  */
-
+/**
+ * @author 54060627+fast-friction@users.noreply.github.com (fast-friction)
+ * Description: citera用の日本語翻訳を追加
+ */
 'use strict';
 
 goog.provide('Blockly.Msg.blocks_ja');
@@ -41,6 +45,12 @@ Blockly.Msg.VAR_CREATE_STRING = "string";
 Blockly.Msg.VAR_CREATE_BOOLEAN = "boolean";
 Blockly.Msg.ARDUINO_INOUT_BUILDIN_LED_HELPURL = "http://arduino.cc/en/Reference/DigitalWrite";
 Blockly.Msg.ARDUINO_INOUT_BUILDIN_LED_INPUT = "LEDを設定";
+Blockly.Msg.ARDUINO_INOUT_BUILDIN_SegmentFlush_int = "7セグメント表示器に整数を表示";
+Blockly.Msg.ARDUINO_INOUT_BUILDIN_SegmentFlush_int_TOOLTIP = "4桁の7セグメント表示器に-999～9999の整数を表示します";
+Blockly.Msg.ARDUINO_INOUT_BUILDIN_SegmentFlush_Float = "7セグメント表示器に小数を表示";
+Blockly.Msg.ARDUINO_INOUT_BUILDIN_SegmentFlush_Float_TOOLTIP = "4桁の7セグメント表示器に-999～9999の浮動小数点数を表示します";
+Blockly.Msg.ARDUINO_INOUT_BUILDIN_SEGMENTDOT1 = "7セグメント表示器のドット右から";
+Blockly.Msg.ARDUINO_INOUT_BUILDIN_SEGMENTDOT2 = "番を";
 Blockly.Msg.ARDUINO_INOUT_BUILDIN_LED_TOOLTIP = "Arduinoボード上のLEDをオンオフします"; //"off or turn on the LED on the Arduino board";
 Blockly.Msg.ARDUINO_INOUT_DIGITAL_WRITE_INPUT1 = "デジタルピン";
 Blockly.Msg.ARDUINO_INOUT_DIGITAL_WRITE_INPUT2 = "を設定";

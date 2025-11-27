@@ -13,6 +13,38 @@
         <link rel="stylesheet" href="./blocklyduino/css/blocklyduino.css" />
         <link rel="stylesheet" href="./blocklyduino/css/override_css.css" />
     </head>
+    <style>
+        /* ビットマップエディタ用の強制スタイル定義 */
+        .dropdownEditor {
+            align-items: center;
+            flex-direction: column;
+            display: flex;
+            justify-content: center;
+        }
+        .pixelContainer {
+            margin: 20px;
+        }
+        .pixelRow {
+            display: flex;
+            flex-direction: row;
+            padding: 0;
+            margin: 0;
+            height: 15px !important; /* 単位pxを補完 */
+        }
+        .pixelButton {
+            width: 15px;
+            height: 15px;
+            border: 1px solid #000;
+            box-sizing: border-box;
+        }
+        .controlButton {
+            margin: 5px 0;
+        }
+        /* ドロップダウンメニューの高さを制限しない設定 */
+        .blocklyDropDownContent {
+            max-height: none !important; 
+        }
+    </style>
     <body>
         <div class="table_wrapper">
             <table id="globalTable">
@@ -297,6 +329,7 @@
                             <option value="arduino_uno">Arduino Uno</option>
                             <option value="arduino_yun">Arduino Yùn</option>
                             <option value="lilypad">LilyPad</option>
+                            <option value="citera_board">citera_board</option>
                         </select>
                         <br>
                         <span id="languageSpan" class="UIText">...</span>
@@ -507,6 +540,7 @@
                             	<option value="arduino_uno">Arduino Uno</option>
                             	<option value="arduino_yun">Arduino Yùn</option>
                             	<option value="lilypad">LilyPad</option>
+                                <option value="citera_board">citera_board</option>
                             </optgroup>
                         </select>
                     </div>
@@ -577,6 +611,7 @@
     <script src="./blocklyduino/toolbox/toolbox_relay.json"></script>
     <script src="./blocklyduino/toolbox/toolbox_servo.json"></script>
     <script src="./blocklyduino/toolbox/toolbox_standard.json"></script>
+    <script src="./blocklyduino/toolbox/toolbox_citera.json"></script>
     <!-- Blockly libraries of function, hacked from different demos -->
     <script src="./js/blockly/keyboard_nav.js"></script>
     <script src="./js/blockly/playground.js"></script>
@@ -586,6 +621,89 @@
     <script src="./js/dialog.js"></script>
     <script src="./js/renderingConstant.js"></script>
     <script src="./js/toolbox.js"></script>
+    <script>
+      if (typeof Blockly !== 'undefined') {
+        // 1. ユーティリティ機能の互換性 (utils)
+        if (!Blockly.utils) Blockly.utils = {};
+        if (!Blockly.utils.dom) Blockly.utils.dom = {};
+        
+        // createSvgElement の補完
+        if (!Blockly.utils.dom.createSvgElement) {
+            Blockly.utils.dom.createSvgElement = function(name, attrs, parent) {
+                return Blockly.createSvgElement(name, attrs, parent);
+            };
+        }
+        // removeClass の補完
+        if (!Blockly.utils.dom.removeClass) {
+            Blockly.utils.dom.removeClass = function(element, className) {
+                if (Blockly.removeClass_) {
+                    Blockly.removeClass_(element, className);
+                } else {
+                    // さらに古い場合
+                    var classList = element.className.split(' ');
+                    var index = classList.indexOf(className);
+                    if (index !== -1) {
+                        classList.splice(index, 1);
+                        element.className = classList.join(' ');
+                    }
+                }
+            };
+        }
+        // Rect の補完
+        if (!Blockly.utils.Rect) {
+           Blockly.utils.Rect = function(top, bottom, left, right) {
+               this.top = top;
+               this.bottom = bottom;
+               this.left = left;
+               this.right = right;
+           };
+        }
+
+        // 2. イベント操作の互換性 (browserEvents)
+        if (!Blockly.browserEvents) {
+            Blockly.browserEvents = {
+                bind: function(elem, type, thisArg, func) {
+                    if (Blockly.bindEventWithChecks_) {
+                        return Blockly.bindEventWithChecks_(elem, type, thisArg, func);
+                    }
+                    return Blockly.bindEvent_(elem, type, thisArg, func);
+                },
+                unbind: function(bindData) {
+                    if (Blockly.unbindEvent_) {
+                        Blockly.unbindEvent_(bindData);
+                    }
+                }
+            };
+        }
+
+        // 3. イベントシステムの互換性 (Events)
+        if (!Blockly.Events.BLOCK_FIELD_INTERMEDIATE_CHANGE) {
+            Blockly.Events.BLOCK_FIELD_INTERMEDIATE_CHANGE = 'field_intermediate_change';
+        }
+        if (!Blockly.Events.get) {
+            Blockly.Events.get = function(type) {
+                // 古いバージョンに合わせて適切なイベントクラスを返す
+                if (type === Blockly.Events.BLOCK_CHANGE || type === 'change') {
+                     return Blockly.Events.Change || Object;
+                }
+                // 未知のイベントタイプでもとりあえずエラーにならないようにオブジェクトを返す
+                return Blockly.Events.Change || Object;
+            };
+        }
+        
+        // 4. スタイルシート登録の互換性 (Css)
+        if (!Blockly.Css) {
+            Blockly.Css = {
+                register: function(cssContent) {
+                    var style = document.createElement('style');
+                    style.innerHTML = cssContent;
+                    document.head.appendChild(style);
+                }
+            };
+        }
+      }
+    </script>
+    <script src="./js/field-bitmap.js"></script>
     <script src="./@blockly/demos/custom-dialogs/custom-dialog.js"></script>
     <!-- blocklyduino libraries of external functions -->
     <script src="./js/ace/ace.js" charset="utf-8"></script>
@@ -599,6 +717,7 @@
     <!-- <script src="./blocklyduino/blocks/blocks_colors.js" async></script> -->
     <script src="./blocklyduino/blocks/board/board_base.js" async></script>
     <script src="./blocklyduino/blocks/board/board_serial.js" async></script>
+    <script src="./blocklyduino/blocks/board/citera.js" async></script>
     <script src="./blocklyduino/blocks/blockly/logic.js" async></script>
     <script src="./blocklyduino/blocks/blockly/math.js" async></script>
     <script src="./blocklyduino/blocks/ds18b20/ds18b20.js" async></script>
@@ -618,6 +737,7 @@
     <!-- blocklyduino specific: addon generator code -->
     <script src="./blocklyduino/arduino/board/board_base.js" async></script>
     <script src="./blocklyduino/arduino/board/board_serial.js" async></script>
+    <script src="./blocklyduino/arduino/board/citera.js" async></script>
     <script src="./blocklyduino/arduino/typed_variable.js" async></script>
     <script src="./blocklyduino/arduino/addon/ds18b20.js" async></script>
     <script src="./blocklyduino/arduino/addon/grove.js" async></script>

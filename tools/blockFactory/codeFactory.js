@@ -58,7 +58,7 @@ CodeFactory.getLang = function () {
 
     if (CodeFactory.LANGUAGE_NAME[lang] === undefined) {
         // Default to English.
-        lang = 'en';
+        lang = 'ja';
     }
     return lang;
 };

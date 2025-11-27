@@ -1,6 +1,7 @@
 /**
  * @license
  * Copyright 2020 Sébastien CANET
+ * Copyright 2025 fast-friction
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -8,6 +9,11 @@
  * @fileoverview Utility functions for handling typed variables.
  * Freely adapted from https://github.com/google/blockly/commit/4e2f8e6e02b0473a86330eb7414794e6bfea430e
  * @author scanet@libreduc.cc (Sébastien CANET)
+ */
+
+/**
+ * @author 54060627+fast-friction@users.noreply.github.com (fast-friction)
+ * Description: Added vars_setup for int and float variable blocks 
  */
 
 var intCompatibility = ['int', 'Number'];
@@ -35,6 +41,18 @@ var numVariablesCallBack = function (currWorkspace) {
             '</button></xml>').firstChild;
     xmlList.push(createintBtnXml);
     if (allIntVars.length > 0) {
+        if (Blockly.Blocks['vars_setup_int']) {
+            var firstVariable = allIntVars[allIntVars.length - 1];
+            var gap = 24;
+            var blockText =
+                    '<xml>' +
+                    '<block type="vars_setup_int" gap="' + gap + '">' +
+                    '<field name="VAR_SETUP_INT" variabletype="int">' + firstVariable.name + '</field>' +
+                    '</block>' +
+                    '</xml>';
+            var block = Blockly.Xml.textToDom(blockText).firstChild;
+            xmlList.push(block);
+        }
         if (Blockly.Blocks['vars_set_int']) {
             var firstVariable = allIntVars[allIntVars.length - 1];
             var gap = 24;
@@ -66,6 +84,18 @@ var numVariablesCallBack = function (currWorkspace) {
             '</button></xml>').firstChild;
     xmlList.push(createfloatBtnXml);
     if (allFloatVars.length > 0) {
+        if (Blockly.Blocks['vars_setup_float']) {
+            var firstVariable = allFloatVars[allFloatVars.length - 1];
+            var gap = 24;
+            var blockText =
+                    '<xml>' +
+                    '<block type="vars_setup_float" gap="' + gap + '">' +
+                    '<field name="VAR_SETUP_FLOAT" variabletype="float">' + firstVariable.name + '</field>' +
+                    '</block>' +
+                    '</xml>';
+            var block = Blockly.Xml.textToDom(blockText).firstChild;
+            xmlList.push(block);
+        }
         if (Blockly.Blocks['vars_set_float']) {
             var firstVariable = allFloatVars[allFloatVars.length - 1];
             var gap = 24;

@@ -1,6 +1,7 @@
 /**
  * @license
  * Copyright 2020 Sébastien CANET
+ * Copyright 2025 fast-friction
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -9,11 +10,23 @@
  * @author scanet@libreduc.cc (Sébastien CANET)
  */
 
+/**
+ * @author 54060627+fast-friction@users.noreply.github.com (fast-friction)
+ * Description: Added vars_setup for int and float variable blocks 
+ */
+
 'use strict';
 
 goog.provide('Blockly.Arduino.VariablesTyped');
 
 goog.require('Blockly.Arduino');
+
+Blockly.Arduino['vars_setup_int'] = function (block) {
+    var argument0 = Blockly.Arduino.valueToCode(block, 'VALUE', Blockly.Arduino.ORDER_ASSIGNMENT) || '0';
+    var varName = Blockly.Arduino.variableDB_.getName(block.getFieldValue('VAR_SETUP_INT'), Blockly.Variables.NAME_TYPE);
+    Blockly.Arduino.setups_['setup_input_'+varName] = ''+varName +'=' + argument0 +';';
+    return '';
+};
 
 Blockly.Arduino['vars_set_int'] = function (block) {
     var argument0 = Blockly.Arduino.valueToCode(block, 'VALUE', Blockly.Arduino.ORDER_ASSIGNMENT) || '0';
@@ -24,6 +37,13 @@ Blockly.Arduino['vars_set_int'] = function (block) {
 Blockly.Arduino['vars_get_int'] = function (block) {
     var code = Blockly.Arduino.variableDB_.getName(block.getFieldValue('VAR_GET_INT'), Blockly.Variables.NAME_TYPE);
     return [code, Blockly.Arduino.ORDER_ATOMIC];
+};
+
+Blockly.Arduino['vars_setup_float'] = function (block) {
+    var argument0 = Blockly.Arduino.valueToCode(block, 'VALUE', Blockly.Arduino.ORDER_ASSIGNMENT) || '0';
+    var varName = Blockly.Arduino.variableDB_.getName(block.getFieldValue('VAR_SETUP_FLOAT'), Blockly.Variables.NAME_TYPE);
+    Blockly.Arduino.setups_['setup_input_'+varName] = ''+varName +'=' + argument0 +';';
+    return '';
 };
 
 Blockly.Arduino['vars_set_float'] = function (block) {

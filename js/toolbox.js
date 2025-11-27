@@ -1,12 +1,16 @@
 /**
  * @license
  * Copyright 2020 Sébastien CANET
+ * Copyright 2025 fast-friction
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /**
  * @fileoverview Intercept data to modify toolbox for user
  * @author scanet@libreduc.cc (Sébastien CANET)
+ * @author 54060627+fast-friction@users.noreply.github.com (fast-friction)
+ * Description: Added toolbox_citera. toolbox_citera is a toolbox used as an alternative to toolbox_arduino.
+ * It contains custom blocks for Citera Board in addition to standard blocks.
  */
 
 var jsonToolbox = {
@@ -26,7 +30,7 @@ jsonToolbox["contents"][9] = toolbox_ds18b20["contents"][0];
 jsonToolbox["contents"][10] = toolbox_grove["contents"][0];
 jsonToolbox["contents"][11] = toolbox_relay["contents"][0];
 jsonToolbox["contents"][12] = toolbox_servo["contents"][0];
-
+jsonToolbox["contents"][13] = toolbox_citera["contents"][0];
 /**
  * Build the toolbox using toolbox definition in json files
  */
@@ -36,7 +40,11 @@ Code.buildToolbox = function() {
 	var boardSelected = Code.getStringParamFromUrl('board', '');
 	// set the default toolbox if none
 	if (toolboxIds === undefined || toolboxIds === "") {
-		if (boardSelected) {
+		if (boardSelected == "citera_board") {
+			toolboxIds = 'LOGIC,LOOPS,MATH,TEXT,LIST,COLOUR,VARIABLES,FUNCTIONS,CITERA';
+			window.localStorage.defaultToolbox = 2;
+		}
+		else if (boardSelected) {
 			toolboxIds = 'LOGIC,LOOPS,MATH,TEXT,LIST,COLOUR,VARIABLES,FUNCTIONS,BOARD';
 			window.localStorage.defaultToolbox = 1;
 		}
