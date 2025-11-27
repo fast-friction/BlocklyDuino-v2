@@ -3,61 +3,46 @@
 This is a fork of the original [BlocklyDuino-v2](https://github.com/BlocklyDuino/BlocklyDuino-v2).
 
 ## Modifications
-I have modified this repository to be compatible with the Citera Board and added several features including a bitmap editor and typed variables.
 
-Main UI Changes (HTML/Scripts)
-Lines 16-47: Added mandatory style definitions for the bitmap editor.
+I have modified this repository to be compatible with the **Citera Board** and added several features including a bitmap editor and typed variables.
 
-Line 332: Added citera_board to the boardMenu selection.
+### Main UI Changes (index.html)
+* **Lines 16-47:** Added mandatory style definitions for the bitmap editor.
+* **Line 332:** Added `<option value="citera_board">citera_board</option>` to the `boardMenu`.
+* **Line 543:** Added `<option value="citera_board">citera_board</option>` to the `boardDescriptionSelector`.
+* **Lines 609-610:** Removed unused toolbox definitions.
+* **Line 614:** Inserted `citeraboard` as the active toolbox.
+* **Lines 624-706:** Inserted scripts required for the bitmap field.
 
-Line 543: Added citera_board to the boardDescriptionSelector.
+### Configuration & Defaults
+* **`tools/blockFactory/codeFactory.js`**
+* **`@blockly/demos/code/code.js`**
+  * Changed the default initial language to Japanese (`ja`).
 
-Lines 609-610: Removed unused toolbox definitions.
+### New Board Support: Citera Board
+* **`blocklyduino/arduino/board/citera.js`**
+* **`blocklyduino/blocks/board/citera.js`**
+  * Added `citera.js`, created based on `board_base.js`.
+  * Added and adjusted blocks specifically for the Citera board.
+* **`blocklyduino/js/boards.json`**
+* **`js/buttons_functions.js`**
+  * Registered `citera_board` (a custom board based on CH32V203).
+* **`blocklyduino/media/boards/citera_board.jpg`**
+  * Added an image for the custom board.
+* **`blocklyduino/msg/blocks_ja.js`**
+  * Added Japanese translations for Citera board blocks.
 
-Line 614: Inserted citeraboard as the active toolbox.
-
-Lines 624-706: Inserted scripts required for the bitmap field.
-
-Configuration & Defaults
-tools/blockFactory/codeFactory.js & @blockly/demos/code/code.js
-
-Changed the default initial language to Japanese (ja).
-
-New Board Support: Citera Board
-blocklyduino/arduino/board/citera.js & blocklyduino/blocks/board/citera.js
-
-Added citera.js (based on board_base.js).
-
-Added and adjusted blocks specifically for the Citera board.
-
-blocklyduino/js/boards.json & js/buttons_functions.js
-
-Registered citera_board (a custom board based on CH32V203).
-
-blocklyduino/media/boards/citera_board.jpg
-
-Added an image for the custom board.
-
-blocklyduino/msg/blocks_ja.js
-
-Added Japanese translations for Citera board blocks.
-
-Toolbox & New Features
-blocklyduino/toolbox/toolbox_citera.json
-
-Added a new toolbox definition for the Citera board.
-
-js/toolbox.js
-
-Added toolbox_citera. This is used as an alternative to toolbox_arduino and contains custom blocks for the Citera Board in addition to standard blocks.
-
-js/field-bitmap/
-
-Added the field-bitmap directory and field-bitmap.js to support bitmap editing features.
-
-typed_variable.js (Arduino, Blocks, and JS directories)
-
-Added vars_setup for int and float variable blocks.
+### Toolbox & New Features
+* **`blocklyduino/toolbox/toolbox_citera.json`**
+  * Added a new toolbox definition for the Citera board.
+* **`js/toolbox.js`**
+  * Added `toolbox_citera`. This is used as an alternative to `toolbox_arduino` and contains custom blocks for the Citera Board in addition to standard blocks.
+* **`js/field-bitmap/`**
+  * Added the `field-bitmap` directory and `field-bitmap.js` to support bitmap editing features.
+* **`blocklyduino/arduino/typed_variable.js`**
+* **`blocklyduino/blocks/typed_variable.js`**
+* **`js/typed_variable.js`**
+  * Added `vars_setup` for `int` and `float` variable blocks.
 
 
 # ![enter image description here](https://raw.githubusercontent.com/BlocklyDuino/BlocklyDuino2Electron/master/src/app.png) Welcome to BlocklyDuino2
