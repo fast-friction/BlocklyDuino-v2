@@ -104,7 +104,7 @@ var toolbox_citera = {
             },
             {
                "kind": "category",
-               "name": "モニター",
+               "name": "LEDマトリクス",
 				"level": "2",
 				"levels": "1,2,3",
                "categorystyle": "arduino_category",
